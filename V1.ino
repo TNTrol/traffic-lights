@@ -18,7 +18,7 @@ void change(int LED_COLOR){
 }
 
 void flick(){
-    int FLICK_TIME = 500;
+    int FLICK_TIME = TIME/4;
     for (int amount = 0; amount < 5; amount++)
     {
         digitalWrite(LED_GREEN, LOW);
