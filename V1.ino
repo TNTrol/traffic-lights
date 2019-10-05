@@ -1,73 +1,53 @@
-const int led_red = 2;
-const int led_yellow = 3;
-const int led_green = 4;
-const int button = 5;
+#define LED_RED 1
+#define LED_YELLOW 3
+#define LED_GREEN 4
+#define BUTTON 2
+#define TIME 2000
 
-void setup() 
-{
-  pinMode(led_red, OUTPUT);
-  pinMode(led_yellow, OUTPUT);
-  pinMode(led_green, OUTPUT);
-  pinMode(button, INPUT_PULLUP);
+void pin(){
+    pinMode(LED_RED, OUTPUT);
+    pinMode(LED_YELLOW, OUTPUT);
+    pinMode(LED_GREEN, OUTPUT);
+    pinMode(BUTTON, INPUT_PULLUP);
 }
 
-void loop() 
-{
-    int buttonState = !digitalRead(button);
-    
-    digitalWrite(led_green, HIGH);
+void change(int LED_COLOR){
+    digitalWrite(LED_COLOR, HIGH);
+    delay(TIME);
+    digitalWrite(LED_COLOR, LOW);
+}
+
+void flick(){
+    int FLICK_TIME = 500;
+    for (int amount = 0; amount < 5; amount++)
+    {
+        digitalWrite(LED_GREEN, LOW);
+        delay(FLICK_TIME);
+        digitalWrite(LED_GREEN, HIGH);
+        delay(FLICK_TIME);
+        digitalWrite(LED_GREEN, LOW);
+    }
+}
+
+void human(){
+    digitalWrite(LED_GREEN, LOW);
+    change(LED_YELLOW);
+    change(LED_RED);
+}
+
+void car(){
+    change(LED_YELLOW);
+    change(LED_RED);
+}
+
+void setup(){
+    pin();
+    attachInterrupt(0, human, FALLING);
+}
+
+void loop(){
+    digitalWrite(LED_GREEN, HIGH);
+    delay(TIME);
     flick();
-
-    if (buttonState == HIGH)
-    {
-        PESH();
-    }
-    
-    else
-    {
-        CAR();
-    }
-}
-
-void PESH()
-{
-    delay(500);
-    digitalWrite(led_green, LOW);
-    digitalWrite(led_yellow, HIGH);
-    delay(1000);
-    digitalWrite(led_yellow, LOW);
-    digitalWrite(led_red, HIGH);
-    delay(2000);
-    digitalWrite(led_red, LOW);
-}
-
-void CAR()
-{
-    delay(500);
-    digitalWrite(led_green, LOW);
-    digitalWrite(led_yellow, HIGH);
-    delay(2000);
-    digitalWrite(led_yellow, LOW);
-    digitalWrite(led_red, HIGH);
-    delay(3000);
-    digitalWrite(led_yellow, HIGH);
-    delay(2000);
-    digitalWrite(led_red, LOW);
-    digitalWrite(led_yellow, LOW);
-}
-
-void flick()
-{
-    delay(3000);
-    digitalWrite(led_green,LOW);
-    delay(500);
-    digitalWrite(led_green, HIGH);
-    delay(500);
-    digitalWrite(led_green,LOW);
-    delay(500);
-    digitalWrite(led_green, HIGH);
-    delay(500);
-    digitalWrite(led_green, LOW);
-    delay(500);
-    digitalWrite(led_green, HIGH);
+    car();
 }
