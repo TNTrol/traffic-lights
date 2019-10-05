@@ -18,7 +18,7 @@ void change(int LED_COLOR){
 }
 
 void flick(){
-    int FLICK_TIME = TIME/4;
+    int FLICK_TIME = TIME/4;//переменная путается с константой
     for (int amount = 0; amount < 5; amount++)
     {
         digitalWrite(LED_GREEN, LOW);
